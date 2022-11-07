@@ -12,9 +12,9 @@ export const {
 } = createStitches({
   theme: {
     colors: {
-      $green: "#b8e893",
-      $grey: "#86948f",
-      $paleGrey: "#abbfb8",
+      green: "#b8e893",
+      grey: "#86948f",
+      paleGrey: "#abbfb8",
     },
   },
 });
