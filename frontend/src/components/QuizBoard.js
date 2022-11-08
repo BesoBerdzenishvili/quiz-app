@@ -34,7 +34,12 @@ const Container = styled("div", {
   },
 });
 
-export default function QuizBoard({ setCorrectAnswers, correctAnswers }) {
+export default function QuizBoard({
+  setCorrectAnswers,
+  correctAnswers,
+  questionsLength,
+  setQuestionsLength,
+}) {
   const [questionNum, setQuestionNum] = useState(0);
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -52,14 +57,15 @@ export default function QuizBoard({ setCorrectAnswers, correctAnswers }) {
     setQuestionNum(questionNum + 1);
     if (questionNum === data.length - 1) {
       setQuestionNum(0);
-      navigate("/logout");
+      navigate("/results");
     }
     isCorrect && setCorrectAnswers(correctAnswers + 1);
   };
+  setQuestionsLength(data && data.length);
   return (
     <Container>
       <p>
-        {questionNum + 1}/{data && data.length}
+        {questionNum + 1}/{questionsLength}
       </p>
       <p>{data && data[questionNum].questionTxt}?</p>
       {data &&
