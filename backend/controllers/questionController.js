@@ -10,24 +10,21 @@ const getQuestions = async (req, res) => {
 
 // create a new question
 const createQuestion = async (req, res) => {
-  const { question, a, b, c, d } = req.body;
+  const { questionTxt, answerOptions } = req.body;
 
   let emptyFields = [];
 
-  if (!question) {
-    emptyFields.push("question");
+  if (!questionTxt) {
+    emptyFields.push("questionTxt");
   }
-  if (!a) {
-    emptyFields.push("a");
+  if (!answerOptions) {
+    emptyFields.push("answerOptions");
   }
-  if (!b) {
-    emptyFields.push("b");
+  if (!answerOptions[0].answerTxt) {
+    emptyFields.push("answerOptions.answerTxt");
   }
-  if (!c) {
-    emptyFields.push("c");
-  }
-  if (!d) {
-    emptyFields.push("d");
+  if (!answerOptions[0].isCorrect && answerOptions[0].isCorrect !== false) {
+    emptyFields.push("answerOptions.isCorrect");
   }
   if (emptyFields.length > 0) {
     return res
@@ -37,8 +34,8 @@ const createQuestion = async (req, res) => {
 
   // add to the database
   try {
-    const quiz = await Question.create({ question, a, b, c, d });
-    res.status(200).json(quiz);
+    const question = await Question.create({ questionTxt, answerOptions });
+    res.status(200).json(question);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
